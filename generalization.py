@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import json
 
 def generalize_numeric_data(dataframe, columns_to_convert, k):
 
@@ -26,3 +27,19 @@ def generalize_numeric_data(dataframe, columns_to_convert, k):
         df[col] = pd.cut(df[col], [interval[0]-1e-9 for interval in col_intervals] + [col_intervals[-1][1]], labels=[f"[{interval[0]}-{interval[1]}]" for interval in col_intervals])
 
     return df
+
+def generalize_categorical_data(dataframe, columns_to_map, categories):
+    with open('categories.json', 'r') as f:
+        categories_data = json.load(f)
+
+    df = dataframe.copy()
+
+    for col, cat in zip(columns_to_map, categories):
+        #df['continent'] = df['country'].map(continent_dict) Crear otra columna si no funciona y luego hacer drop
+        category = categories_data[cat]
+        df[col] = df[col].map(category)
+
+    return df
+
+
+    
