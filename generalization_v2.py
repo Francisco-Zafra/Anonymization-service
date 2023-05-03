@@ -17,33 +17,56 @@ def get_division(dataframe, columns_to_convert):
 
 
 def generalize_numeric_data(dataframe, columns_to_convert, k):
-
     df = dataframe.copy()
 
     for col in columns_to_convert:
-        print(col)
-        #df[col].apply(parse_currency_string)
-        col_min = df[col].min()
-        col_max = df[col].max()
-        interval_size = int(np.ceil((col_max - col_min) / k))
-        print("Calculating intervals...")
-        print("Max: " + str(col_max)  + ", Min: " + str(col_min) + ", Interval: " + str(interval_size) + ", k: " + str(k))
-
+        unique_values = sorted(df[col].unique())
         col_intervals = []
-        
-        #Create intervals for k-anonymization
+        pointer = 0
+        interval_size = 1
+        num_rows = df.shape[0]
+        print(unique_values)
+        print("Calculating intervals...")
+        print(col)
+        while(num_rows > 0):#hacer un while que mientras no se cambien la cantidad de filas siga adelante, tambien evaluar si la cantidad de datos que quedan son mayor a k    
+            if (num_rows > k + interval_size):
+                while(pointer + interval_size < len(unique_values)):
+                    print("pointer: " + str(pointer) + " "+ str(len(unique_values)) + " " + str(interval_size))
+                    interval_min = unique_values[pointer]
+                    interval_max = unique_values[pointer+interval_size]
+                    print("current interval: ["+ str(interval_min) + ", " + str(interval_max) + "]")
+                    mask = np.logical_and(df[col] >= interval_min, df[col] <= interval_max)
+                    count = np.sum(mask)
 
-        for i in range(k+1):
-            interval_min = col_min + i * interval_size
-            interval_max = min(col_max, interval_min + interval_size)
-            if (interval_min>= col_max):
-                break
-            #print("Interval " + str(i) + " ["+ str(interval_min) + ", " + str(interval_max) + "]")
-            col_intervals.append((interval_min, interval_max))
-        #print("Intervals: " + str(len(col_intervals)))
-        #Applying k-anonymization dor numeric-data
+                    if (count >= k):
+                        print("add a new interval..." + str(interval_min) + " count: " + str(count))
+                        col_intervals.append((interval_min, interval_max))
+                        pointer = pointer + interval_size + 1
+                        num_rows = num_rows - count
+                        interval_size = 1
+                        print("fal_num_rows: " + str(num_rows))
+                    else:
+                        interval_size = interval_size + 1
+            else:
+                print("num_rows <= k......")
+                col_intervals.append(unique_values[-1])
+                pointer = len(unique_values)
+                num_rows = 0
+            
+        print(col_intervals)
         df[col] = pd.cut(df[col], [interval[0]-1e-9 for interval in col_intervals] + [col_intervals[-1][1]], labels=[f"[{interval[0]}-{interval[1]}]" for interval in col_intervals])
-    #print(df)
+        
+    print(df)
+    return df
+
+                
+                
+
+        
+
+
+
+
     return df
 
 def generalize_categorical_data(dataframe, columns_to_map, categories):
