@@ -10,7 +10,7 @@
 9;Larry Ellison;$90.6B;-$2.46B;+$10.9B ;United States;Technology;;;;
 10;Steve Ballmer;$89.1B;-$342M;+$8.71B ;United States;Technology;;;;
 11;Francoise Bettencourt Meyers;$83.9B;-$1.33B;+$8.11B ;France;Consumer;;;;
-12;Amancio Ortega;$79.3B;-$1.07B;+$12.8B ;Spain ;Retail;;;;
+12;Amancio Ortega;$79.3B;-$1.07B;+$12.8B ;Spain;Retail;;;;
 13;Mukesh Ambani;$74.1B;+$402M;-$2.61B ;India;Energy;;;;
 14;Charles Koch;$64.3B;-$195M;+$7.42B ;United States;Industrial;;;;
 15;Julia Flesher Koch & Family;$64.3B;-$195M;+$7.42B ;United States;Industrial;;;;
@@ -168,7 +168,7 @@
 167;Forrest Li;$12.6B;+$346M;+$1.65B ;Singapore;Technology;;;;
 168;Sherry Brydson;$12.6B;-$49.4M;+$1.61B ;Canada;Media & Telecom;;;;
 169;Dang Yanbao;$12.6B;-$909M;+$3.18B ;China;Energy;;;;
-170;Lee Jae-Yong & Family;$12.6B;-$271M;-$15.4B ;Korea;Diversified;;;;
+170;Lee Jae-Yong & Family;$12.6B;-$271M;-$15.4B ;South Korea;Diversified;;;;
 171;Paolo Rocca  & Family;$12.6B;-$109M;+$2.58B ;Italy;Commodities;;;;
 172;Wu Shaoxun;$12.5B;+$242M;-$3.91B ;China;Food & Beverage;;;;
 173;Wang Chuan-Fu;$12.5B;-$59.5M;-$3.59B ;China;Consumer;;;;
@@ -217,19 +217,19 @@
 216;Carlos Sicupira;$10.6B;-$141M;+$584M ;Brazil;Food & Beverage;;;;
 217;Frank Wang;$10.6B;+$144M;+$940M ;China;Technology;;;;
 218;Li Shuirong;$10.6B;-$1.03B;-$1.19B ;China;Energy;;;;
-219;Pham Nhat Vuong;$10.5B;-$128M;+$2.01B ;Viet Nam;Real-Estate;;;;
+219;Pham Nhat Vuong;$10.5B;-$128M;+$2.01B ;Vietnam;Real-Estate;;;;
 220;Michael Kadoorie;$10.5B;-$131M;+$645M ;Hong Kong;Energy;;;;
 221;Ding Shijia;$10.5B;-$207M;+$1.01B ;China;Consumer;;;;
-222;Seo Jung-Jin;$10.4B;-$227M;-$4.66B ;Korea;Health Care;;;;
+222;Seo Jung-Jin;$10.4B;-$227M;-$4.66B ;South Korea;Health Care;;;;
 223;Stan Druckenmiller;$10.4B;+$4.60B;+$4.60B ;United States;Finance;;;;
 224;Kumar Birla;$10.4B;-$62.6M;+$3.55B ;India;Industrial;;;;
-225;Kim Jung-Ju;$10.4B;-$284M;+$51.1M ;Korea;Technology;;;;
+225;Kim Jung-Ju;$10.4B;-$284M;+$51.1M ;South Korea;Technology;;;;
 226;Georg Schaeffler;$10.3B;-$203M;-$409M ;Germany;Industrial;;;;
 227;Rinat Akhmetov;$10.3B;-$85.2M;+$2.81B ;Ukraine;Industrial;;;;
 228;Blair Parry-Okeden;$10.3B;-$124M;+$1.04B ;United States;Media & Telecom;;;;
 229;Jim Kennedy;$10.3B;-$99.0M;+$1.04B ;United States;Media & Telecom;;;;
 230;Suleiman Kerimov;$10.3B;+$17.5M;+$398M ;Russia;Commodities;;;;
-231;Brian Kim;$10.3B;-$159M;+$3.34B ;Korea;Technology;;;;
+231;Brian Kim;$10.3B;-$159M;+$3.34B ;South Korea;Technology;;;;
 232;Shu Ping;$10.3B;+$307M;-$4.26B ;Singapore;Food & Beverage;;;;
 233;Evan Spiegel;$10.3B;+$183M;+$827M ;United States;Technology;;;;
 234;Michael Platt;$10.2B;-$100M;+$5.35B ;United Kingdom;Finance;;;;
@@ -306,7 +306,7 @@
 305;Rocco Commisso;$8.64B;-$64.4M;-$1.30B ;United States;Media & Telecom;;;;
 306;Benu Bangur;$8.61B;+$81.0M;+$1.05B ;India;Commodities;;;;
 307;German Larrea;$8.61B;+$19.2M;+$2.30B ;Mexico;Commodities;;;;
-308;Anthony von Mandl;$8.60B;-$102M;+$2.60B ;Canda;Consumer;;;;
+308;Anthony von Mandl;$8.60B;-$102M;+$2.60B ;Canada;Consumer;;;;
 309;Shigenobu Nagamori;$8.60B;-$273M;-$986M ;Japan;Industrial;;;;
 310;Lu Zhongfang;$8.60B;+$563M;-$3.19B ;China;Services;;;;
 311;Jerry Jones;$8.56B;-$45.8M;+$2.17B ;United States;Entertainment;;;;
@@ -358,7 +358,7 @@
 357;Yu Yong;$7.49B;-$330M;+$2.08B ;China;Finance;;;;
 358;Chase Coleman;$7.47B;-$13.8M;+$2.11B ;United States;Finance;;;;
 359;Andy Bechtolsheim;$7.45B;-$18.3M;+$582M ;Germany;Technology;;;;
-360;Hong Ra-hee;$7.44B;-$276M;+$414M ;Korea;Diversified;;;;
+360;Hong Ra-hee;$7.44B;-$276M;+$414M ;South Korea;Diversified;;;;
 361;Tammy Gustavson;$7.43B;-$46.0M;+$944M ;United States;Services;;;;
 362;Lin Jianhua;$7.42B;-$156M;+$167M ;China;Technology;;;;
 363;Martin Viessmann & Family;$7.42B;-$138M;+$427M ;Germany;Industrial;;;;
@@ -432,7 +432,7 @@
 432;George Kaiser;$6.42B;-$31.8M;+$450M ;United States;Energy;;;;
 433;Bom Kim;$6.39B;-$143M;+$5.49B ;United States;Technology;;;;
 434;Andrey Guryev;$6.38B;+$42.6M;+$1.26B ;Russia;Industrial;;;;
-435;Chung Mong-Koo;$6.37B;-$58.7M;+$688M ;Korea;Industrial;;;;
+435;Chung Mong-Koo;$6.37B;-$58.7M;+$688M ;South Korea;Industrial;;;;
 436;Jean-Pierre Cayard;$6.35B;-$108M;+$588M ;France;Food & Beverage;;;;
 437;Peter Thiel;$6.31B;+$237M;-$330M ;United States;Finance;;;;
 438;Jane Lauder;$6.30B;-$71.4M;+$596M ;United States;Consumer;;;;
@@ -491,7 +491,7 @@
 491;Chip Wilson;$5.81B;-$28.1M;-$149M ;Canada;Retail;;;;
 492;Marie Besnier Beauvalot;$5.80B;-$52.1M;+$314M ;France;Food & Beverage;;;;
 493;Clive Calder;$5.78B;-$25.0M;+$325M ;United Kingdom;Entertainment;;;;
-494;Kwon Hyuk-Bin;$5.77B;-$76.0M;-$266M ;Korea;Media & Telecom;;;;
+494;Kwon Hyuk-Bin;$5.77B;-$76.0M;-$266M ;South Korea;Media & Telecom;;;;
 495;Mark Cuban;$5.75B;-$25.0M;+$826M ;United States;Technology;;;;
 496;Lino Saputo;$5.75B;-$48.0M;+$772M ;Canada;Food & Beverage;;;;
 497;Prajogo Pangestu;$5.74B;-$74.7M;-$1.03B ;Indonesia;Energy;;;;

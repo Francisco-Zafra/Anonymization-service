@@ -1,6 +1,6 @@
 import pandas as pd
-#from generalization import *
-from generalization_v2 import * 
+from generalization import *
+#from generalization_v2 import * 
 
 def parse_currency_string(currency_string):
     # Eliminamos el símbolo '$' y cualquier espacio en blanco, y convertimos la cadena en minúsculas
@@ -32,7 +32,7 @@ def parse_currency_string(currency_string):
     return currency_float
 
 
-df = pd.DataFrame({'Age': [30, 93, 18, 13, 95, 34, 87, 81, 85, 40, 21, 63, 28, 66, 23, 79, 45, 53, 68, 11,
+df2 = pd.DataFrame({'Age': [30, 93, 18, 13, 95, 34, 87, 81, 85, 40, 21, 63, 28, 66, 23, 79, 45, 53, 68, 11,
              95, 24, 23, 62, 37, 11, 72, 85, 70, 60, 1, 52, 84, 23, 35, 19, 41, 31, 55, 47, 
              90, 3, 95, 51, 39, 89, 15, 56, 23, 78, 95, 51, 89, 64, 67, 61, 63, 71, 74, 64, 
              44, 31, 19, 14, 77, 8, 36, 76, 47, 87, 1, 84, 26, 95, 1, 12, 35, 72, 70, 9, 70, 
@@ -65,22 +65,23 @@ df = pd.DataFrame({'Age': [30, 93, 18, 13, 95, 34, 87, 81, 85, 40, 21, 63, 28, 6
 #generalized_df = generalize_categorical_data(df, ['Country'], ['country'])
 #print(generalized_df)
 
-df = generalize_numeric_data(df, ['Age', 'Income'], 2)
-counts = df.groupby(['Age', 'Income']).size()
-counts_df = counts.reset_index(name='count')
-counts_df = counts_df.loc[counts_df['count'] > 0]
-print(counts_df)
+#df = generalize_numeric_data(df, ['Age', 'Income'], 2)
+#counts = df.groupby(['Age', 'Income']).size()
+#counts_df = counts.reset_index(name='count')
+#counts_df = counts_df.loc[counts_df['count'] > 0]
+#print(counts_df)
 
 # Mostrar el resultado
 #print(counts_df)
 
 #gen_kanony_data(df, ['Age', 'Income'], ['Country'], ['country'])
-#df = pd.read_csv('AgeDataset-V3.csv', sep=',')
+df = pd.read_csv('AgeDataset-V4.csv', sep=',')
 #df = pd.read_csv('500 richest people 2021.csv', delimiter=';')
 #print(df.dtypes)
-#print(df.head(10))
+print(df.head(10))
+print(df.shape)
 
-#gen_kanony_data(df, ['Birth year', 'Death year', 'Age of death'], ['Country'], ['country'])
+gen_kanony_data(df, ['Birth year', 'Death year', 'Age of death'], ['Country'], ['country'])
 #numeric_cols = ['$ Last Change', '$ YTD Change']
 #fixed_data = df.copy()
 #fixed_data[numeric_cols] =  fixed_data[numeric_cols].applymap(parse_currency_string)

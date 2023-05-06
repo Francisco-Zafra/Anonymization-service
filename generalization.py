@@ -12,8 +12,10 @@ def get_division(dataframe, columns_to_convert):
         #print(col + " Col_Max: " + str(col_max) + " Col_Min: " + str(col_min) + " Intervals: " + str(intervals))
         if (intervals < num_inter):
             num_inter = intervals
-
-    return num_inter/100000000
+    
+    if num_inter > 100000000:
+        return num_inter/100000000
+    return num_inter
 
 
 def generalize_numeric_data(dataframe, columns_to_convert, k):
@@ -51,13 +53,22 @@ def generalize_categorical_data(dataframe, columns_to_map, categories):
         categories_data = json.load(f)
 
     df = dataframe.copy()
-
     for col, cat in zip(columns_to_map, categories):
         #df['continent'] = df['country'].map(continent_dict) Crear otra columna si no funciona y luego hacer drop
         category = categories_data[cat]
-        df[col] = df[col].map(category)
+        if (cat == 'country'):
+            df[col] = df[col].map(category)
+        elif (cat == "occupation"):
+            df[col] = df[col].apply(des_to_cat, occupations= category)
 
     return df
+
+def des_to_cat(desc, occupations):
+    words = desc.lower().split()
+    for word in words:
+        if word in occupations:
+            return occupations.get(word)
+
 
 
 def gen_kanony_data(dataframe, numeric_col, cat_col, categories):
