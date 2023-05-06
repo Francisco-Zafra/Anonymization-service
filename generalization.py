@@ -9,7 +9,7 @@ def get_division(dataframe, columns_to_convert):
         col_max = dataframe[col].max()
         col_min = dataframe[col].min()
         intervals = col_max - col_min
-        #print(col + " Col_Max: " + str(col_max) + " Col_Min: " + str(col_min) + " Intervals: " + str(intervals))
+
         if (intervals < num_inter):
             num_inter = intervals
     
@@ -24,17 +24,15 @@ def generalize_numeric_data(dataframe, columns_to_convert, k):
 
     for col in columns_to_convert:
         print(col)
-        #df[col].apply(parse_currency_string)
         col_min = df[col].min()
         col_max = df[col].max()
         interval_size = int(np.ceil((col_max - col_min) / k))
         print("Calculating intervals...")
-        print("Max: " + str(col_max)  + ", Min: " + str(col_min) + ", Interval: " + str(interval_size) + ", k: " + str(k))
+        #print("Max: " + str(col_max)  + ", Min: " + str(col_min) + ", Interval: " + str(interval_size) + ", k: " + str(k))
 
         col_intervals = []
         
         #Create intervals for k-anonymization
-
         for i in range(k+1):
             interval_min = col_min + i * interval_size
             interval_max = min(col_max, interval_min + interval_size)
@@ -69,9 +67,7 @@ def des_to_cat(desc, occupations):
         if word in occupations:
             return occupations.get(word)
 
-
-
-def gen_kanony_data(dataframe, numeric_col, cat_col, categories):
+def gen_kanony_data(dataframe, numeric_col):
     df = dataframe.copy()
     k=2
     chunk =int(get_division(dataframe, numeric_col))
@@ -81,7 +77,7 @@ def gen_kanony_data(dataframe, numeric_col, cat_col, categories):
         df = dataframe.copy()
         print("chunk: " + str(chunk))
         df = generalize_numeric_data(df, numeric_col, chunk)
-        #df = generalize_categorical_data(df, cat_col, categories)
+        
 
         counts = df.groupby(numeric_col).size()
         counts_df = counts.reset_index(name='count')
@@ -94,8 +90,10 @@ def gen_kanony_data(dataframe, numeric_col, cat_col, categories):
             return df
         
         if (chunk > chunk +2 ):
+            print("k-anonymation fail, trying new intervals...")
             chunk = chunk - 1*10**(len(str(chunk))-1)
         else:
+            print("k-anonymation fail, trying new intervals...")
             chunk = chunk - 1
         
         print("················································································")
