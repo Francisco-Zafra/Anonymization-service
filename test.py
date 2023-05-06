@@ -40,17 +40,17 @@ df = generalize_categorical_data(df, ['Short description','Country'], ['occupati
 print(df.head(10))
 
 print("----------------------------------------------------------------------------------------------")
-df2 = pd.read_csv('500 richest people 2021 decrypted2.csv', delimiter=';')
+df2 = pd.read_csv('500 richest people 2021.csv', delimiter=';')
 print(df2.head(10))
 print(df2.shape)
 numeric_cols = ['$ Last Change', '$ YTD Change']
-fixed_data = df.copy()
+fixed_data = df2.copy()
 fixed_data[numeric_cols] =  fixed_data[numeric_cols].applymap(parse_currency_string)
 fixed_data = fixed_data.iloc[:,:7]
 print(fixed_data.head(10))
-df2 = gen_kanony_data(fixed_data, ['$ YTD Change'], ['Country'], ['country'])
-df2 = generalize_categorical_data(df, ['Country'], ['country'])
-print(df2.head(10))
+fixed_data = gen_kanony_data(fixed_data, ['$ YTD Change'])
+fixed_data = generalize_categorical_data(fixed_data, ['Country'], ['country'])
+print(fixed_data.head(10))
 
 
 
