@@ -9,9 +9,9 @@ import concurrent.futures
 
 #needs 2hrs to finish
 #age dataset
-df = pd.read_csv("AgeDataset-V3.csv",sep=",")
-df = df.drop(df.columns[0], axis=1)
-# Define the secret key
+# df = pd.read_csv("AgeDataset-V3.csv",sep=",")
+# df = df.drop(df.columns[0], axis=1)
+# # Define the secret key
 secret_key = b'souyana_amar'
 
 salt = b'global' # This should be a unique value for each encryption operation
@@ -64,7 +64,7 @@ def decrypt_name(id, name):
     decrypted_data = f.decrypt(name.encode())
     return decrypted_data.decode()
 
-print("Encrypting...")
+# print("Encrypting...")
 
 # for i, row in df.iterrows():
 #     salt = row[0].encode()
@@ -86,14 +86,14 @@ def encrypt_row(row):
     return new_row
 
 # parralelize
-with concurrent.futures.ThreadPoolExecutor() as executor: #iterate with multiple threads
-    results = list(executor.map(encrypt_row, df.itertuples(index=False)))
+# with concurrent.futures.ThreadPoolExecutor() as executor: #iterate with multiple threads
+#     results = list(executor.map(encrypt_row, df.itertuples(index=False)))
 
-df = pd.DataFrame(results, columns=df.columns)
+# df = pd.DataFrame(results, columns=df.columns)
 
-df.to_csv("AgeDataset-V3-encrypted2.csv", index=False)
+# df.to_csv("AgeDataset-V3-encrypted2.csv", index=False)
 
-print("Decrypting...")
+# print("Decrypting...")
 
 # for i, row in df.iterrows():
 #     row[0] = decrypt_id(row[0])
@@ -114,8 +114,51 @@ def decrypt_row(row):
     return new_row
 
 # parralelize
-with concurrent.futures.ThreadPoolExecutor() as executor: #iterate with multiple threads
-    results = list(executor.map(decrypt_row, df.itertuples(index=False)))
+# with concurrent.futures.ThreadPoolExecutor() as executor: #iterate with multiple threads
+#     results = list(executor.map(decrypt_row, df.itertuples(index=False)))
 
-df = pd.DataFrame(results, columns=df.columns)
-df.to_csv("AgeDataset-V3-decrypted2.csv", index=False)
+# df = pd.DataFrame(results, columns=df.columns)
+# df.to_csv("AgeDataset-V3-decrypted2.csv", index=False)
+
+def deidentify(df):
+    df = df.drop(df.columns[0], axis=1)
+    # Define the secret key
+    secret_key = b'souyana_amar'
+
+    salt = b'global' # This should be a unique value for each encryption operation
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+    )
+    encryption_key = base64.urlsafe_b64encode(kdf.derive(secret_key))
+
+    # parralelize
+    with concurrent.futures.ThreadPoolExecutor() as executor: #iterate with multiple threads
+        results = list(executor.map(encrypt_row, df.itertuples(index=False)))
+
+    df = pd.DataFrame(results, columns=df.columns)
+
+    return df
+
+def undo_deidentify(file_name, sep):
+    # Define the secret key
+    secret_key = b'souyana_amar'
+
+    salt = b'global' # This should be a unique value for each encryption operation
+    kdf = PBKDF2HMAC(
+        algorithm=hashes.SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+    )
+    encryption_key = base64.urlsafe_b64encode(kdf.derive(secret_key))
+
+    df = pd.read_csv(file_name, sep=sep)
+
+    with concurrent.futures.ThreadPoolExecutor() as executor: #iterate with multiple threads
+        results = list(executor.map(decrypt_row, df.itertuples(index=False)))
+
+    df = pd.DataFrame(results, columns=df.columns)
+    return df

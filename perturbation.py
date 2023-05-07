@@ -1,10 +1,9 @@
 import pandas as pd
 import numpy as np
 
-# Cargamos los datos originales desde un archivo CSV
-original_data = pd.read_csv('500 richest people 2021.csv',delimiter=";")
-
 def parse_currency_string(currency_string):
+    if type(currency_string) == type(1) or type(currency_string) == type(1.0):
+        return currency_string
     # Eliminamos el símbolo '$' y cualquier espacio en blanco, y convertimos la cadena en minúsculas
     currency_string = currency_string.replace('$', '').replace(' ', '').replace(' ', '').lower()
     # Extraemos el signo (si existe)
@@ -43,32 +42,51 @@ def perturb(x):
     # Devolvemos el valor original más la perturbación
     return parse_currency_string(x) + perturbation
 
-# Seleccionamos las columnas numéricas a perturbar
-numeric_cols = ['$ Last Change', '$ YTD Change']
 
-# Aplicamos la perturbación a las columnas numéricas
-perturbed_data = original_data.copy()
-perturbed_data[numeric_cols] = perturbed_data[numeric_cols].applymap(perturb)
+def noise_addition(df, numeric_cols):
+    # Aplicamos la perturbación a las columnas numéricas
+    perturbed_data = df.copy()
+    perturbed_data[numeric_cols] = perturbed_data[numeric_cols].applymap(perturb)
 
-# Redondeamos los valores perturbados a 2 decimales para mayor legibilidad
-perturbed_data[numeric_cols] = perturbed_data[numeric_cols].round(2)
+    # Redondeamos los valores perturbados a 2 decimales para mayor legibilidad
+    perturbed_data[numeric_cols] = perturbed_data[numeric_cols].round(2)
 
-# Definimos el valor de k
-k = 10
+    return perturbed_data
 
-# Definimos una función que toma un dataframe y realiza una operación en el grupo de 10 elementos
-def operate_on_group(df):
-    # Realizamos una operación en el grupo de 10 elementos, por ejemplo, calculamos la suma de la columna A
-    result = df['Total Net Worth'].apply(parse_currency_string)
-    # Devolvemos el resultado como un dataframe
-    return pd.DataFrame({'result': [result]})
 
-result = perturbed_data.groupby(perturbed_data.index // k).apply(operate_on_group)
+def micro_aggregation(df, numeric_cols, k=3):
+        
+    # Crear una copia de la base de datos a modificar
+    df_anon = df.copy()
+    
+    # Para cada columna numérica, calcular las medias y desviaciones estándar
+    # de los k vecinos más cercanos de cada registro
+    for col in numeric_cols:
+        means = []
+        stds = []
+        for i in range(len(df_anon)):
+            # Calcular las distancias a todos los demás registros
+            distances = np.sqrt(np.sum((df_anon[numeric_cols].iloc[i] - df_anon[numeric_cols])**2, axis=1))
+            # Obtener los índices de los k vecinos más cercanos
+            k_nn_idx = np.argsort(distances)[1:k+1]
+            # Calcular la media y desviación estándar de los k vecinos más cercanos
+            means.append(np.mean(df_anon[col].iloc[k_nn_idx]))
+            stds.append(np.std(df_anon[col].iloc[k_nn_idx]))
+        # Perturbar cada registro sumando un ruido aleatorio extraído de una distribución normal
+        # con media 0 y desviación estándar igual al promedio de las desviaciones estándar de los vecinos
+        df_anon[col] = np.random.normal(loc=df_anon[col], scale=np.mean(stds)).round(2)
+    
+    return df_anon
 
-print(result)
 
-# # Seleccionamos y reordenamos las columnas que queremos incluir en el archivo anonimizado
-# anon_data = anon_data[['Rank', 'Name', 'Total Net Worth', '$ Last Change', '$ YTD Change', 'Country', 'Industry']]
+# Cargamos los datos originales desde un archivo CSV
+# original_data = pd.read_csv('500 richest people 2021.csv',delimiter=";")
 
-# # Guardamos los datos anonimizados en un archivo CSV
-# anon_data.to_csv('datos_anonimizados.csv', index=False)
+# numeric_cols = ["$ Last Change", "$ YTD Change"]
+# fixed_data = original_data.copy()
+# fixed_data[numeric_cols] = fixed_data[numeric_cols].applymap(parse_currency_string)
+# fixed_data = fixed_data.iloc[:, :7]
+
+# df_anon = micro_aggregation(fixed_data, numeric_cols)
+
+# print(df_anon)
